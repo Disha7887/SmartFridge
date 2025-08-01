@@ -148,12 +148,14 @@ export const Dashboard = (): JSX.Element => {
       description: "Dashboard overview",
       icon: Home,
       active: true,
+      href: "/dashboard",
     },
     {
-      name: "Total Usage",
-      description: "Usage statistics", 
+      name: "Client Usage",
+      description: "Usage statistics",
       icon: BarChart3,
       active: false,
+      href: "/client-usage",
     },
     {
       name: "API Setup", 
