@@ -23,6 +23,7 @@ function Router() {
         <Route path="/pricing" component={Pricing} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/client-usage" component={ClientUsage} />
+        <Route path="/api-setup" component={APISetup} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         {/* Fallback to 404 */}
