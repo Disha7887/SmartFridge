@@ -208,12 +208,43 @@ export const Dashboard = (): JSX.Element => {
           <nav className="space-y-2">
             {navItems.map((item, index) => {
               const IconComponent = item.icon;
+
+              if (item.href) {
+                return (
+                  <Link key={index} href={item.href}>
+                    <button
+                      className={`w-full flex items-center p-3 rounded-lg text-left transition-colors ${
+                        item.active
+                          ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg'
+                          : 'text-gray-600 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center mr-3 ${
+                        item.active ? 'bg-white/20' : 'bg-gray-100'
+                      }`}>
+                        <IconComponent className={`w-4 h-4 ${item.active ? 'text-white' : 'text-gray-600'}`} />
+                      </div>
+                      <div className="flex-1">
+                        <div className={`text-sm font-medium ${item.active ? 'text-white' : 'text-gray-700'}`}>
+                          {item.name}
+                        </div>
+                        <div className={`text-xs ${item.active ? 'text-red-100' : 'text-gray-500'}`}>
+                          {item.description}
+                        </div>
+                      </div>
+                      {item.active && <div className="w-2 h-2 bg-white rounded-full ml-3" />}
+                      {item.external && <ExternalLink className="w-3 h-3 text-gray-400 ml-2" />}
+                    </button>
+                  </Link>
+                );
+              }
+
               return (
                 <button
                   key={index}
                   className={`w-full flex items-center p-3 rounded-lg text-left transition-colors ${
-                    item.active 
-                      ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg' 
+                    item.active
+                      ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg'
                       : 'text-gray-600 hover:bg-gray-50'
                   }`}
                 >
