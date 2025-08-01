@@ -167,8 +167,9 @@ export const Dashboard = (): JSX.Element => {
     {
       name: "API Reference",
       description: "Documentation",
-      icon: BookOpen, 
+      icon: BookOpen,
       active: false,
+      href: "/api-reference",
     },
     {
       name: "View Plans",
