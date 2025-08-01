@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 
 import { Body } from "@/pages/Body";
+import { Pricing } from "@/pages/Pricing";
 
 function Router() {
   return (
