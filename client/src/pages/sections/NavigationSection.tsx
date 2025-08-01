@@ -40,11 +40,11 @@ export const NavigationSection = (): JSX.Element => {
                       {item.name}
                     </NavigationMenuLink>
                   ) : (
-                    <Link href={item.href}>
-                      <NavigationMenuLink className="[font-family:'Roboto',Helvetica] font-medium text-[#d0d5da] text-base leading-6 whitespace-nowrap cursor-pointer hover:text-white transition-colors">
+                    <NavigationMenuLink asChild>
+                      <Link href={item.href} className="[font-family:'Roboto',Helvetica] font-medium text-[#d0d5da] text-base leading-6 whitespace-nowrap cursor-pointer hover:text-white transition-colors">
                         {item.name}
-                      </NavigationMenuLink>
-                    </Link>
+                      </Link>
+                    </NavigationMenuLink>
                   )}
                 </NavigationMenuItem>
               ))}
