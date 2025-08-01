@@ -13,6 +13,7 @@ function Router() {
     <Switch>
       {/* Add pages below */}
       <Route path="/" component={Body} />
+      <Route path="/pricing" component={Pricing} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
