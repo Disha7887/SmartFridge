@@ -9,6 +9,7 @@ import NotFound from "@/pages/not-found";
 import { Body } from "@/pages/Body";
 import { Pricing } from "@/pages/Pricing";
 import { Dashboard } from "@/pages/Dashboard";
+import { Contact } from "@/pages/Contact";
 
 function Router() {
   return (
