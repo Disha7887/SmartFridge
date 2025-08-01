@@ -11,11 +11,11 @@ import {
 export const NavigationSection = (): JSX.Element => {
   // Navigation menu items data
   const navItems = [
-    { name: "Home", width: "w-[42.98px]" },
-    { name: "Tools", width: "w-[38.66px]" },
-    { name: "Pricing", width: "w-[50.38px]" },
-    { name: "About", width: "w-[42.98px]" },
-    { name: "Contact", width: "w-[56.12px]" },
+    { name: "Home", width: "w-[42.98px]", href: "/" },
+    { name: "Tools", width: "w-[38.66px]", href: "#" },
+    { name: "Pricing", width: "w-[50.38px]", href: "/pricing" },
+    { name: "About", width: "w-[42.98px]", href: "#" },
+    { name: "Contact", width: "w-[56.12px]", href: "#" },
   ];
 
   return (
