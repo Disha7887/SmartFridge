@@ -14,6 +14,7 @@ import { About } from "@/pages/About";
 import { ClientUsage } from "@/pages/ClientUsage";
 import { APISetup } from "@/pages/APISetup";
 import { APIReference } from "@/pages/APIReference";
+import { LiveTools } from "@/pages/LiveTools";
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
         <Route path="/client-usage" component={ClientUsage} />
         <Route path="/api-setup" component={APISetup} />
         <Route path="/api-reference" component={APIReference} />
+        <Route path="/live-tools" component={LiveTools} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         {/* Fallback to 404 */}
