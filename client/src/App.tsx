@@ -17,6 +17,7 @@ function Router() {
         {/* Add pages below */}
         <Route path="/" component={Body} />
         <Route path="/pricing" component={Pricing} />
+        <Route path="/dashboard" component={Dashboard} />
         {/* Fallback to 404 */}
         <Route component={NotFound} />
       </Switch>
