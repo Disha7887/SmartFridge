@@ -10,6 +10,7 @@ import { Body } from "@/pages/Body";
 import { Pricing } from "@/pages/Pricing";
 import { Dashboard } from "@/pages/Dashboard";
 import { Contact } from "@/pages/Contact";
+import { About } from "@/pages/About";
 
 function Router() {
   return (
