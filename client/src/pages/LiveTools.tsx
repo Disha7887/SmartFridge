@@ -1,31 +1,223 @@
-import React from "react";
-import { ArrowLeft } from "lucide-react";
+import React, { useState } from "react";
+import { Search, Star, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
+import { Input } from "@/components/ui/input";
 
 export const LiveTools = (): JSX.Element => {
-  const endpoints = [
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const filters = [
+    { id: "all", label: "All Tools (12)", count: 12 },
+    { id: "convert", label: "Convert (6)", count: 6 },
+    { id: "manipulate", label: "Manipulate (4)", count: 4 },
+    { id: "secure", label: "Secure (2)", count: 2 }
+  ];
+
+  const favoriteTools = [
     {
-      method: "POST",
-      path: "/convert/pdf-to-word",
-      status: "Available"
+      name: "PDF to Word",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.3248 6.66665V13.3333H12.6585L10.9923 11.6666L9.32602 13.3333H7.65977V6.66665H9.32602V10.8333L10.9923 9.16665L12.6585 10.8333V6.66665H13.4916V3.33331H5.16039V16.6666H16.8241V6.66665H14.3248ZM3.49414 2.49998C3.49414 2.26665 3.57468 2.06943 3.73575 1.90831C3.89682 1.7472 4.09399 1.66665 4.32727 1.66665H14.3248L18.4904 5.83331V17.5C18.4904 17.7222 18.4099 17.9166 18.2488 18.0833C18.0877 18.25 17.8905 18.3333 17.6573 18.3333H4.32727C4.09399 18.3333 3.89682 18.2528 3.73575 18.0916C3.57468 17.9305 3.49414 17.7333 3.49414 17.5V2.49998Z" fill="#2563EB"/>
+        </svg>
+      ),
+      bgColor: "bg-blue-50"
     },
     {
-      method: "POST", 
-      path: "/convert/pdf-to-excel",
-      status: "Available"
-    },
-    {
-      method: "POST",
-      path: "/merge",
-      status: "Available"
-    },
-    {
-      method: "POST",
-      path: "/split", 
-      status: "Available"
+      name: "Merge PDFs", 
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6.82664 4.99998V2.49998C6.82664 2.26665 6.90718 2.06943 7.06825 1.90831C7.22932 1.7472 7.42649 1.66665 7.65977 1.66665H17.6573C17.8905 1.66665 18.0877 1.7472 18.2488 1.90831C18.4099 2.06943 18.4904 2.26665 18.4904 2.49998V14.1666C18.4904 14.4 18.4099 14.5972 18.2488 14.7583C18.0877 14.9194 17.8905 15 17.6573 15H15.1579V17.5C15.1579 17.7333 15.0774 17.9305 14.9163 18.0916C14.7552 18.2528 14.558 18.3333 14.3248 18.3333H4.32727C4.09399 18.3333 3.89682 18.2528 3.73575 18.0916C3.57468 17.9305 3.49414 17.7333 3.49414 17.5V5.83331C3.49414 5.59998 3.57745 5.40276 3.74408 5.24165C3.9107 5.08054 4.1051 4.99998 4.32727 4.99998H6.82664ZM5.16039 6.66665V16.6666H13.4916V6.66665H5.16039ZM8.49289 4.99998H15.1579V13.3333H16.8241V3.33331H8.49289V4.99998Z" fill="#9333EA"/>
+        </svg>
+      ),
+      bgColor: "bg-purple-50"
     }
   ];
+
+  const tools = [
+    {
+      name: "PDF to Word",
+      description: "Convert PDF documents to editable Word files",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.3248 6.66665V13.3333H12.6585L10.9923 11.6666L9.32602 13.3333H7.65977V6.66665H9.32602V10.8333L10.9923 9.16665L12.6585 10.8333V6.66665H13.4916V3.33331H5.16039V16.6666H16.8241V6.66665H14.3248ZM3.49414 2.49998C3.49414 2.26665 3.57468 2.06943 3.73575 1.90831C3.89682 1.7472 4.09399 1.66665 4.32727 1.66665H14.3248L18.4904 5.83331V17.5C18.4904 17.7222 18.4099 17.9166 18.2488 18.0833C18.0877 18.25 17.8905 18.3333 17.6573 18.3333H4.32727C4.09399 18.3333 3.89682 18.2528 3.73575 18.0916C3.57468 17.9305 3.49414 17.7333 3.49414 17.5V2.49998Z" fill="#2563EB"/>
+        </svg>
+      ),
+      bgColor: "bg-blue-50",
+      iconColor: "text-blue-600",
+      popularity: 95,
+      progressColor: "bg-blue-500",
+      isFavorite: true,
+      category: "convert"
+    },
+    {
+      name: "PDF to Excel",
+      description: "Extract tables and data to Excel spreadsheets", 
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.992 9.99998L14.3248 13.3333H12.3253L10.9923 11.4333L9.65927 13.3333H7.65977L9.99252 9.99998L7.65977 6.66665H9.65927L10.9923 8.56665L12.3253 6.66665H13.4916V3.33331H5.16039V16.6666H16.8241V6.66665H14.3248L11.992 9.99998ZM3.49414 2.49998C3.49414 2.26665 3.57468 2.06943 3.73575 1.90831C3.89682 1.7472 4.09399 1.66665 4.32727 1.66665H14.3248L18.4904 5.83331V17.5C18.4904 17.7222 18.4099 17.9166 18.2488 18.0833C18.0877 18.25 17.8905 18.3333 17.6573 18.3333H4.32727C4.09399 18.3333 3.89682 18.2528 3.73575 18.0916C3.57468 17.9305 3.49414 17.7333 3.49414 17.5V2.49998Z" fill="#16A34A"/>
+        </svg>
+      ),
+      bgColor: "bg-green-50",
+      iconColor: "text-green-600", 
+      popularity: 88,
+      progressColor: "bg-green-500",
+      isFavorite: false,
+      category: "convert"
+    },
+    {
+      name: "PDF to PowerPoint",
+      description: "Convert PDF presentations to PPT format",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.8255 16.6666V18.3333H10.1593V16.6666H3.49426C3.26098 16.6666 3.06381 16.5861 2.90274 16.425C2.74167 16.2639 2.66113 16.0666 2.66113 15.8333V4.16665H19.3236V15.8333C19.3236 16.0666 19.2431 16.2639 19.082 16.425C18.921 16.5861 18.7238 16.6666 18.4905 16.6666H11.8255ZM4.32738 15H17.6574V5.83331H4.32738V15ZM11.8255 7.49998H15.9911V9.16665H11.8255V7.49998ZM11.8255 10.8333H15.9911V12.5H11.8255V10.8333ZM8.49301 7.49998V9.99998H10.9924C10.9924 10.4555 10.8813 10.875 10.6591 11.2583C10.437 11.6416 10.1343 11.9444 9.75103 12.1666C9.36779 12.3889 8.94845 12.5 8.49301 12.5C8.03757 12.5 7.61823 12.3889 7.23499 12.1666C6.85175 11.9444 6.54905 11.6416 6.32688 11.2583C6.10472 10.875 5.99363 10.4555 5.99363 9.99998C5.99363 9.54442 6.10472 9.12498 6.32688 8.74165C6.54905 8.35831 6.85175 8.05554 7.23499 7.83331C7.61823 7.61109 8.03757 7.49998 8.49301 7.49998ZM2.66113 1.66665H19.3236V3.33331H2.66113V1.66665Z" fill="#EA580C"/>
+        </svg>
+      ),
+      bgColor: "bg-orange-50",
+      iconColor: "text-orange-600",
+      popularity: 75,
+      progressColor: "bg-orange-500",
+      isFavorite: false,
+      category: "convert"
+    },
+    {
+      name: "Word to PDF",
+      description: "Convert Word documents to PDF format",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.9923 13.3333H7.65977V6.66665H10.9923C11.5921 6.66665 12.1475 6.81665 12.6585 7.11665C13.1695 7.41665 13.575 7.8222 13.8749 8.33331C14.1748 8.84442 14.3248 9.39998 14.3248 9.99998C14.3248 10.6 14.1748 11.1555 13.8749 11.6666C13.575 12.1778 13.1695 12.5833 12.6585 12.8833C12.1475 13.1833 11.5921 13.3333 10.9923 13.3333ZM9.32602 8.33331V11.6666H10.9923C11.2922 11.6666 11.5699 11.5916 11.8254 11.4416C12.0809 11.2916 12.2836 11.0889 12.4336 10.8333C12.5835 10.5778 12.6585 10.3 12.6585 9.99998C12.6585 9.69998 12.5835 9.4222 12.4336 9.16665C12.2836 8.91109 12.0809 8.70831 11.8254 8.55831C11.5699 8.40831 11.2922 8.33331 10.9923 8.33331H9.32602ZM13.4916 3.33331H5.16039V16.6666H16.8241V6.66665H13.4916V3.33331ZM3.49414 2.49998C3.49414 2.26665 3.57468 2.06943 3.73575 1.90831C3.89682 1.7472 4.09399 1.66665 4.32727 1.66665H14.3248L18.4904 5.83331V17.5C18.4904 17.7222 18.4099 17.9166 18.2488 18.0833C18.0877 18.25 17.8905 18.3333 17.6573 18.3333H4.32727C4.09399 18.3333 3.89682 18.2528 3.73575 18.0916C3.57468 17.9305 3.49414 17.7333 3.49414 17.5V2.49998Z" fill="#DC2626"/>
+        </svg>
+      ),
+      bgColor: "bg-red-50",
+      iconColor: "text-red-600",
+      popularity: 92,
+      progressColor: "bg-red-500",
+      isFavorite: false,
+      category: "convert"
+    },
+    {
+      name: "Merge PDFs",
+      description: "Combine multiple PDF files into one document",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6.82664 4.99998V2.49998C6.82664 2.26665 6.90718 2.06943 7.06825 1.90831C7.22932 1.7472 7.42649 1.66665 7.65977 1.66665H17.6573C17.8905 1.66665 18.0877 1.7472 18.2488 1.90831C18.4099 2.06943 18.4904 2.26665 18.4904 2.49998V14.1666C18.4904 14.4 18.4099 14.5972 18.2488 14.7583C18.0877 14.9194 17.8905 15 17.6573 15H15.1579V17.5C15.1579 17.7333 15.0774 17.9305 14.9163 18.0916C14.7552 18.2528 14.558 18.3333 14.3248 18.3333H4.32727C4.09399 18.3333 3.89682 18.2528 3.73575 18.0916C3.57468 17.9305 3.49414 17.7333 3.49414 17.5V5.83331C3.49414 5.59998 3.57745 5.40276 3.74408 5.24165C3.9107 5.08054 4.1051 4.99998 4.32727 4.99998H6.82664ZM5.16039 6.66665V16.6666H13.4916V6.66665H5.16039ZM8.49289 4.99998H15.1579V13.3333H16.8241V3.33331H8.49289V4.99998Z" fill="#9333EA"/>
+        </svg>
+      ),
+      bgColor: "bg-purple-50",
+      iconColor: "text-purple-600",
+      popularity: 85,
+      progressColor: "bg-purple-500",
+      isFavorite: true,
+      category: "manipulate"
+    },
+    {
+      name: "Split PDF",
+      description: "Split large PDF files into smaller documents",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.0422 6.69998L11.175 8.81665L16.7736 3.21665C16.9958 3.00554 17.2485 2.86109 17.5317 2.78331C17.815 2.70554 18.101 2.70554 18.3899 2.78331C18.6787 2.86109 18.9286 3.00554 19.1397 3.21665L9.0422 13.3C9.35323 13.8222 9.50875 14.3861 9.50875 14.9916C9.50875 15.5972 9.35879 16.1555 9.05886 16.6666C8.75894 17.1778 8.35348 17.5833 7.8425 17.8833C7.33152 18.1833 6.7761 18.3333 6.17625 18.3333C5.5764 18.3333 5.02098 18.1833 4.51 17.8833C3.99902 17.5833 3.59356 17.1778 3.29364 16.6666C2.99371 16.1555 2.84375 15.6 2.84375 15C2.84375 14.4 2.99371 13.8444 3.29364 13.3333C3.59356 12.8222 3.99902 12.4166 4.51 12.1166C5.02098 11.8166 5.57918 11.6666 6.18458 11.6666C6.78999 11.6666 7.35373 11.8222 7.87583 12.1333L9.99196 9.99998L7.87583 7.86665C7.35373 8.17776 6.78999 8.33331 6.18458 8.33331C5.57918 8.33331 5.02098 8.18331 4.51 7.88331C3.99902 7.58331 3.59356 7.17776 3.29364 6.66665C2.99371 6.15554 2.84375 5.59998 2.84375 4.99998C2.84375 4.39998 2.99371 3.84442 3.29364 3.33331C3.59356 2.8222 3.99902 2.41665 4.51 2.11665C5.02098 1.81665 5.5764 1.66665 6.17625 1.66665C6.7761 1.66665 7.33152 1.81665 7.8425 2.11665C8.35348 2.41665 8.75894 2.8222 9.05886 3.33331C9.35879 3.84442 9.50875 4.40276 9.50875 5.00831C9.50875 5.61387 9.35323 6.17776 9.0422 6.69998ZM13.5244 11.1833L19.1397 16.7833C18.9286 16.9944 18.6787 17.1389 18.3899 17.2166C18.101 17.2944 17.815 17.2944 17.5317 17.2166C17.2485 17.1389 16.9958 16.9944 16.7736 16.7833L12.358 12.35L13.5244 11.1833ZM7.35929 13.8166C7.20377 13.6611 7.02326 13.5416 6.81776 13.4583C6.61225 13.375 6.39842 13.3333 6.17625 13.3333C5.87633 13.3333 5.59862 13.4083 5.34313 13.5583C5.08763 13.7083 4.88491 13.9111 4.73494 14.1666C4.58498 14.4222 4.51 14.7 4.51 15C4.51 15.3 4.58498 15.5778 4.73494 15.8333C4.88491 16.0889 5.08763 16.2916 5.34313 16.4416C5.59862 16.5916 5.87633 16.6666 6.17625 16.6666C6.47618 16.6666 6.75388 16.5916 7.00938 16.4416C7.26487 16.2916 7.46759 16.0889 7.61756 15.8333C7.76752 15.5778 7.8425 15.3 7.8425 15C7.8425 14.7778 7.80084 14.5639 7.71753 14.3583C7.63422 14.1528 7.5148 13.9722 7.35929 13.8166ZM7.35929 6.18331C7.5148 6.02776 7.63422 5.8472 7.71753 5.64165C7.80084 5.43609 7.8425 5.2222 7.8425 4.99998C7.8425 4.69998 7.76752 4.4222 7.61756 4.16665C7.46759 3.91109 7.26487 3.70831 7.00938 3.55831C6.75388 3.40831 6.47618 3.33331 6.17625 3.33331C5.87633 3.33331 5.59862 3.40831 5.34313 3.55831C5.08763 3.70831 4.88491 3.91109 4.73494 4.16665C4.58498 4.4222 4.51 4.69998 4.51 4.99998C4.51 5.29998 4.58498 5.57776 4.73494 5.83331C4.88491 6.08887 5.08763 6.29165 5.34313 6.44165C5.59862 6.59165 5.87633 6.66665 6.17625 6.66665C6.39842 6.66665 6.61225 6.62498 6.81776 6.54165C7.02326 6.45831 7.20377 6.33887 7.35929 6.18331Z" fill="black"/>
+        </svg>
+      ),
+      bgColor: "bg-gray-50",
+      iconColor: "text-gray-600",
+      popularity: 78,
+      progressColor: "bg-gray-500",
+      isFavorite: false,
+      category: "manipulate"
+    },
+    {
+      name: "Compress PDF",
+      description: "Reduce PDF file size while maintaining quality",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.6573 18.3333H4.32727C4.09399 18.3333 3.89682 18.2528 3.73575 18.0916C3.57468 17.9305 3.49414 17.7333 3.49414 17.5V2.49998C3.49414 2.26665 3.57468 2.06943 3.73575 1.90831C3.89682 1.7472 4.09399 1.66665 4.32727 1.66665H17.6573C17.8905 1.66665 18.0877 1.7472 18.2488 1.90831C18.4099 2.06943 18.4904 2.26665 18.4904 2.49998V17.5C18.4904 17.7333 18.4099 17.9305 18.2488 18.0916C18.0877 18.2528 17.8905 18.3333 17.6573 18.3333ZM16.8241 16.6666V3.33331H5.16039V16.6666H16.8241ZM12.6585 9.99998V14.1666H9.32602V11.6666H10.9923V9.99998H12.6585ZM10.9923 3.33331H12.6585V4.99998H10.9923V3.33331ZM9.32602 4.99998H10.9923V6.66665H9.32602V4.99998ZM10.9923 6.66665H12.6585V8.33331H10.9923V6.66665ZM9.32602 8.33331H10.9923V9.99998H9.32602V8.33331Z" fill="black"/>
+        </svg>
+      ),
+      bgColor: "bg-gray-50",
+      iconColor: "text-gray-600",
+      popularity: 82,
+      progressColor: "bg-yellow-500",
+      isFavorite: false,
+      category: "manipulate"
+    },
+    {
+      name: "PDF Password Protection",
+      description: "Add password security to your PDF files",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.8241 8.33331H17.6573C17.8905 8.33331 18.0877 8.41387 18.2488 8.57498C18.4099 8.73609 18.4904 8.93331 18.4904 9.16665V17.5C18.4904 17.7333 18.4099 17.9305 18.2488 18.0916C18.0877 18.2528 17.8905 18.3333 17.6573 18.3333H4.32727C4.09399 18.3333 3.89682 18.2528 3.73575 18.0916C3.57468 17.9305 3.49414 17.7333 3.49414 17.5V9.16665C3.49414 8.93331 3.57468 8.73609 3.73575 8.57498C3.89682 8.41387 4.09399 8.33331 4.32727 8.33331H5.16039V7.49998C5.16039 6.44442 5.42699 5.46109 5.96019 4.54998C6.47117 3.6722 7.16544 2.97776 8.043 2.46665C8.95389 1.93331 9.93697 1.66665 10.9923 1.66665C12.0476 1.66665 13.0306 1.93331 13.9415 2.46665C14.8191 2.97776 15.5134 3.6722 16.0243 4.54998C16.5575 5.46109 16.8241 6.44442 16.8241 7.49998V8.33331ZM5.16039 9.99998V16.6666H16.8241V9.99998H5.16039ZM10.1591 11.6666H11.8254V15H10.1591V11.6666ZM15.1579 8.33331V7.49998C15.1579 6.74442 14.9718 6.0472 14.5997 5.40831C14.2276 4.76942 13.7221 4.26387 13.0834 3.89165C12.4447 3.51942 11.7476 3.33331 10.9923 3.33331C10.2369 3.33331 9.53985 3.51942 8.90112 3.89165C8.26239 4.26387 7.75696 4.76942 7.38483 5.40831C7.01271 6.0472 6.82664 6.74442 6.82664 7.49998V8.33331H15.1579Z" fill="#DC2626"/>
+        </svg>
+      ),
+      bgColor: "bg-red-50", 
+      iconColor: "text-red-600",
+      popularity: 70,
+      progressColor: "bg-red-500",
+      isFavorite: false,
+      category: "secure"
+    },
+    {
+      name: "PDF Watermark",
+      description: "Add watermarks and branding to PDFs",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.9415 8.41664L13.8249 8.29998C13.2584 7.75553 12.5919 7.37775 11.8254 7.16664C11.0367 6.95553 10.2674 6.95275 9.51763 7.15831C8.76781 7.36387 8.11798 7.7472 7.56811 8.30831C7.01825 8.86942 6.63779 9.55553 6.42673 10.3666C6.39341 10.4778 6.36564 10.6944 6.34342 11.0166C6.26566 11.8389 6.12125 12.5389 5.91019 13.1166C5.67692 13.75 5.32145 14.35 4.84379 14.9166C5.81022 15.2944 6.79886 15.6 7.80972 15.8333C8.87612 16.0666 9.82033 16.1833 10.6423 16.1833C11.32 16.1833 11.9642 16.0389 12.5752 15.75C13.1862 15.4611 13.711 15.0611 14.1498 14.55C14.5886 14.0389 14.8968 13.45 15.0746 12.7833C15.2856 11.9944 15.2856 11.2111 15.0746 10.4333C14.8635 9.65553 14.4858 8.98331 13.9415 8.41664ZM12.142 5.53331L16.2409 2.33331C16.4076 2.19998 16.5964 2.13887 16.8075 2.14998C17.0185 2.16109 17.2018 2.24442 17.3573 2.39998L19.84 4.88331C19.9956 5.03887 20.0789 5.2222 20.09 5.43331C20.1011 5.64442 20.04 5.82775 19.9067 5.98331L16.7075 10.1C16.963 11.1444 16.9519 12.1833 16.6742 13.2166C16.4298 14.1278 16.0021 14.9389 15.3912 15.65C14.8024 16.35 14.0943 16.8916 13.2667 17.275C12.4391 17.6583 11.5616 17.85 10.634 17.85C9.70647 17.85 8.67617 17.7278 7.54312 17.4833C6.49894 17.25 5.46586 16.9389 4.44389 16.55C3.45525 16.1722 2.60546 15.7722 1.89453 15.35C2.69433 14.75 3.31084 14.1666 3.74407 13.6C4.09954 13.1222 4.34392 12.6389 4.47722 12.15C4.56609 11.85 4.63274 11.4333 4.67717 10.9C4.71049 10.4666 4.75493 10.1444 4.81047 9.93331C5.09929 8.84442 5.62138 7.91664 6.37674 7.14998C7.10989 6.39442 7.97634 5.8722 8.97609 5.58331C9.99806 5.28331 11.0534 5.26664 12.142 5.53331ZM14.9746 7.09998C15.0301 7.14442 15.0857 7.19442 15.1412 7.24998L16.091 8.19998L18.1405 5.54998L16.6908 4.09998L14.0415 6.14998L14.9746 7.09998Z" fill="black"/>
+        </svg>
+      ),
+      bgColor: "bg-gray-50",
+      iconColor: "text-gray-600", 
+      popularity: 65,
+      progressColor: "bg-gray-500",
+      isFavorite: false,
+      category: "secure"
+    },
+    {
+      name: "OCR Text Recognition",
+      description: "Extract text from scanned PDF documents",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.72703 3.55004L12.1754 10L10.9924 11.1834L5.72703 5.91671C5.2827 6.48337 4.93834 7.11115 4.69396 7.80004C4.44957 8.51115 4.32738 9.24449 4.32738 10C4.32738 11.2112 4.63286 12.3334 5.24382 13.3667C5.83256 14.3667 6.62681 15.1612 7.62656 15.75C8.65963 16.3612 9.78157 16.6667 10.9924 16.6667C12.2032 16.6667 13.3251 16.3612 14.3582 15.75C15.358 15.1612 16.1522 14.3667 16.7409 13.3667C17.3519 12.3334 17.6574 11.2112 17.6574 10C17.6574 8.78893 17.3519 7.66671 16.7409 6.63337C16.1522 5.63337 15.358 4.83893 14.3582 4.25004C13.3251 3.63893 12.2032 3.33337 10.9924 3.33337C10.2481 3.33337 9.52053 3.4556 8.8096 3.70004L7.52658 2.41671C8.62631 1.91671 9.78157 1.66671 10.9924 1.66671C12.1254 1.66671 13.2085 1.88338 14.2416 2.31671C15.2302 2.73893 16.1105 3.33615 16.8826 4.10837C17.6546 4.8806 18.2517 5.76115 18.6738 6.75004C19.107 7.78337 19.3236 8.86671 19.3236 10C19.3236 11.1334 19.107 12.2167 18.6738 13.25C18.2517 14.2389 17.6546 15.1195 16.8826 15.8917C16.1105 16.6639 15.2302 17.2612 14.2416 17.6834C13.2085 18.1167 12.1254 18.3334 10.9924 18.3334C9.85933 18.3334 8.77627 18.1167 7.7432 17.6834C6.75455 17.2612 5.87422 16.6639 5.10219 15.8917C4.33016 15.1195 3.73309 14.2389 3.31097 13.25C2.87775 12.2167 2.66113 11.1334 2.66113 10C2.66113 8.72226 2.93884 7.51115 3.49426 6.36671C4.02746 5.26671 4.77172 4.32782 5.72703 3.55004Z" fill="black"/>
+        </svg>
+      ),
+      bgColor: "bg-gray-50",
+      iconColor: "text-gray-600",
+      popularity: 73,
+      progressColor: "bg-gray-500",
+      isFavorite: false,
+      category: "convert"
+    },
+    {
+      name: "PDF Form Filler",
+      description: "Fill and edit PDF forms electronically",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.5734 5.63337L15.9071 7.30004V3.33337H8.40902V7.50004H4.2434V16.6667H15.9071V14.3667L17.5734 12.7V17.5C17.5734 17.7334 17.4929 17.9306 17.3318 18.0917C17.1707 18.2528 16.9791 18.3334 16.7569 18.3334H3.41027C3.177 18.3334 2.97983 18.2528 2.81875 18.0917C2.65768 17.9306 2.57715 17.7334 2.57715 17.5V6.66671L7.5759 1.66671H16.7403C16.9735 1.66671 17.1707 1.74726 17.3318 1.90838C17.4929 2.06949 17.5734 2.26671 17.5734 2.50004V5.63337ZM18.2232 7.33337L19.4063 8.51671L12.9246 15H11.7415V13.8167L18.2232 7.33337Z" fill="black"/>
+        </svg>
+      ),
+      bgColor: "bg-gray-50",
+      iconColor: "text-gray-600",
+      popularity: 68,
+      progressColor: "bg-gray-500",
+      isFavorite: false,
+      category: "manipulate"
+    },
+    {
+      name: "PDF Signature",
+      description: "Add digital signatures to PDF documents",
+      icon: (
+        <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6.77665 11.7C6.5767 12.2223 6.41008 12.7167 6.27678 13.1834C7.08769 12.5945 8.03745 12.2334 9.12607 12.1C10.148 11.9667 11.1033 11.5889 11.992 10.9667C12.8585 10.3556 13.5305 9.6056 14.0082 8.71671L12.8085 7.50004L14.808 5.48337C15.1746 5.11671 15.5745 4.46115 16.0077 3.51671C13.7305 3.87226 11.8198 4.75004 10.2758 6.15004C8.82059 7.48337 7.65421 9.33337 6.77665 11.7ZM15.1579 7.50004L15.991 8.33337C15.7022 9.18893 15.2523 9.99449 14.6414 10.75C13.986 11.55 13.2195 12.2056 12.3419 12.7167C11.3977 13.2723 10.3924 13.6167 9.32602 13.75C7.10435 14.0278 5.71581 15.5556 5.16039 18.3334H3.49414L3.54413 18.0167C3.79962 16.4834 4.03845 15.2556 4.26062 14.3334C4.6383 12.7334 5.09929 11.3 5.6436 10.0334C6.34343 8.43337 7.19322 7.06671 8.19297 5.93337C9.35934 4.60004 10.7368 3.57782 12.3253 2.86671C14.1137 2.06671 16.1687 1.66671 18.4904 1.66671C17.6573 4.16671 16.8241 5.83337 15.991 6.66671L15.1579 7.50004Z" fill="black"/>
+        </svg>
+      ),
+      bgColor: "bg-gray-50",
+      iconColor: "text-gray-600",
+      popularity: 77,
+      progressColor: "bg-gray-500",
+      isFavorite: false,
+      category: "secure"
+    }
+  ];
+
+  const filteredTools = activeFilter === "all" ? tools : tools.filter(tool => tool.category === activeFilter);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -34,7 +226,7 @@ export const LiveTools = (): JSX.Element => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
-              <svg width="21" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10.9923 13.3333H7.65977V6.66667H10.9923C11.5921 6.66667 12.1475 6.81667 12.6585 7.11667C13.1695 7.41667 13.575 7.82223 13.8749 8.33334C14.1748 8.84445 14.3248 9.4 14.3248 10C14.3248 10.6 14.1748 11.1556 13.8749 11.6667C13.575 12.1778 13.1695 12.5833 12.6585 12.8833C12.1475 13.1833 11.5921 13.3333 10.9923 13.3333ZM9.32602 8.33334V11.6667H10.9923C11.2922 11.6667 11.5699 11.5917 11.8254 11.4417C12.0809 11.2917 12.2836 11.0889 12.4336 10.8333C12.5835 10.5778 12.6585 10.3 12.6585 10C12.6585 9.7 12.5835 9.42223 12.4336 9.16667C12.2836 8.91111 12.0809 8.70834 11.8254 8.55834C11.5699 8.40834 11.2922 8.33334 10.9923 8.33334H9.32602ZM13.4916 3.33334H5.16039V16.6667H16.8241V6.66667H13.4916V3.33334ZM3.49414 2.5C3.49414 2.26667 3.57468 2.06945 3.73575 1.90834C3.89682 1.74723 4.09399 1.66667 4.32727 1.66667H14.3248L18.4904 5.83334V17.5C18.4904 17.7222 18.4099 17.9167 18.2488 18.0833C18.0877 18.25 17.8905 18.3333 17.6573 18.3333H4.32727C4.09399 18.3333 3.89682 18.2528 3.73575 18.0917C3.57468 17.9306 3.49414 17.7333 3.49414 17.5V2.5Z" fill="white"/>
               </svg>
             </div>
@@ -85,66 +277,113 @@ export const LiveTools = (): JSX.Element => {
       </header>
 
       {/* Main Content */}
-      <div className="flex">
-        {/* Sidebar Spacer */}
-        <div className="w-64"></div>
-        
-        {/* Content */}
-        <main className="flex-1 p-6">
-          <div className="max-w-7xl space-y-6">
-            {/* Page Title */}
-            <h1 className="text-2xl font-bold text-gray-900">API Reference</h1>
-
-            {/* Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Quick Reference Card */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Reference</h2>
-                
-                <div className="space-y-3">
-                  {/* Base URL */}
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-base font-medium text-gray-900 mb-1">Base URL</div>
-                    <div className="text-sm text-gray-600 font-mono">https://api.pdfconverter.com/v1</div>
-                  </div>
-
-                  {/* Authentication */}
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-base font-medium text-gray-900 mb-1">Authentication</div>
-                    <div className="text-sm text-gray-600">Bearer Token in Authorization header</div>
-                  </div>
-
-                  {/* Rate Limit */}
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-base font-medium text-gray-900 mb-1">Rate Limit</div>
-                    <div className="text-sm text-gray-600">1000 requests per minute</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Available Endpoints Card */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">Available Endpoints</h2>
-                
-                <div className="space-y-2">
-                  {endpoints.map((endpoint, index) => (
-                    <div key={index} className="p-2 rounded-lg">
-                      <div className="flex items-center justify-between">
-                        <div className="text-sm font-mono text-gray-900">
-                          {endpoint.method} {endpoint.path}
-                        </div>
-                        <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
-                          {endpoint.status}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+      <main className="p-6 max-w-7xl mx-auto">
+        <div className="space-y-6">
+          {/* Page Header */}
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Live PDF Tools</h1>
+              <p className="text-gray-600 mt-1">Professional PDF conversion and manipulation tools</p>
+            </div>
+            
+            {/* Search Bar */}
+            <div className="relative w-80">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Input 
+                placeholder="Search tools..."
+                className="pl-10 border-gray-300"
+              />
             </div>
           </div>
-        </main>
-      </div>
+
+          {/* Filter Buttons */}
+          <div className="flex gap-2 flex-wrap">
+            {filters.map((filter) => (
+              <Button
+                key={filter.id}
+                onClick={() => setActiveFilter(filter.id)}
+                variant={activeFilter === filter.id ? "default" : "outline"}
+                className={activeFilter === filter.id 
+                  ? "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg" 
+                  : "border-gray-200 text-gray-700 hover:bg-gray-50"
+                }
+              >
+                {filter.label}
+              </Button>
+            ))}
+          </div>
+
+          {/* Favorite Tools Section */}
+          <div className="bg-gradient-to-r from-red-50 to-red-50 border border-red-200 rounded-xl p-6">
+            <div className="flex items-center mb-4">
+              <Star className="w-5 h-5 text-red-500 mr-2 fill-current" />
+              <h2 className="text-lg font-semibold text-gray-900">Your Favorite Tools</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {favoriteTools.map((tool, index) => (
+                <div key={index} className="bg-white border border-red-200 rounded-lg p-4 text-center">
+                  <div className={`w-10 h-10 rounded-lg ${tool.bgColor} flex items-center justify-center mx-auto mb-3`}>
+                    {tool.icon}
+                  </div>
+                  <h3 className="text-sm font-medium text-gray-900">{tool.name}</h3>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Tools Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredTools.map((tool, index) => (
+              <div key={index} className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 relative">
+                {/* Favorite Button */}
+                <button className={`absolute top-4 right-4 w-11 h-11 rounded-lg flex items-center justify-center ${
+                  tool.isFavorite 
+                    ? "bg-gradient-to-r from-red-500 to-red-600 shadow-lg" 
+                    : "border border-gray-200"
+                }`}>
+                  <Star className={`w-5 h-5 ${tool.isFavorite ? "text-white fill-current" : "text-gray-400"}`} />
+                </button>
+
+                {/* Tool Content */}
+                <div className="pr-12">
+                  {/* Icon */}
+                  <div className={`w-12 h-12 rounded-xl ${tool.bgColor} flex items-center justify-center mb-4`}>
+                    {tool.icon}
+                  </div>
+
+                  {/* Tool Info */}
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{tool.name}</h3>
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">{tool.description}</p>
+
+                  {/* Popularity */}
+                  <div className="mb-6">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs text-gray-500">Popularity</span>
+                      <span className="text-xs text-gray-500">{tool.popularity}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className={`${tool.progressColor} h-2 rounded-full`}
+                        style={{ width: `${tool.popularity}%` }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="space-y-2">
+                    <Button variant="outline" className="w-full text-sm">
+                      Use Tool
+                    </Button>
+                    <Button variant="outline" size="sm" className="w-full flex items-center justify-center">
+                      <Info className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
