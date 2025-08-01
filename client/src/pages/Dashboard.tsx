@@ -1,18 +1,18 @@
 import React from "react";
-import { 
-  ArrowLeft, 
-  Bell, 
-  ChevronDown, 
-  Search, 
-  Home, 
-  BarChart3, 
-  Settings, 
-  BookOpen, 
-  Tag, 
-  Code, 
-  Wrench, 
-  Upload, 
-  Clock, 
+import {
+  ArrowLeft,
+  Bell,
+  ChevronDown,
+  Search,
+  Home,
+  BarChart3,
+  Settings,
+  BookOpen,
+  Tag,
+  Code,
+  Wrench,
+  Upload,
+  Clock,
   TrendingUp,
   FileText,
   HardDrive,
@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "wouter";
 
 export const Dashboard = (): JSX.Element => {
   // Dashboard stats data
