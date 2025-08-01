@@ -11,13 +11,15 @@ import { Pricing } from "@/pages/Pricing";
 
 function Router() {
   return (
-    <Switch>
-      {/* Add pages below */}
-      <Route path="/" component={Body} />
-      <Route path="/pricing" component={Pricing} />
-      {/* Fallback to 404 */}
-      <Route component={NotFound} />
-    </Switch>
+    <Layout>
+      <Switch>
+        {/* Add pages below */}
+        <Route path="/" component={Body} />
+        <Route path="/pricing" component={Pricing} />
+        {/* Fallback to 404 */}
+        <Route component={NotFound} />
+      </Switch>
+    </Layout>
   );
 }
 
