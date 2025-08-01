@@ -3,6 +3,7 @@ import { FeaturesSection } from "./sections/FeaturesSection";
 import { FooterSection } from "./sections/FooterSection";
 import { HeroSection } from "./sections/HeroSection";
 import { NavigationSection } from "./sections/NavigationSection";
+import { PricingSection } from "./sections/PricingSection";
 import { TestimonialsSection } from "./sections/TestimonialsSection";
 
 export const Body = (): JSX.Element => {
