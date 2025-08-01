@@ -21,9 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Link, useLocation } from "wouter";
 import { DashboardContent } from "./dashboard/DashboardContent";
 import { ClientUsageContent } from "./dashboard/ClientUsageContent";
-import { APISetup } from "./APISetup";
-import { APIReference } from "./APIReference";
-import { LiveTools } from "./LiveTools";
+import { LiveToolsContent } from "./dashboard/LiveToolsContent";
 
 export const Dashboard = (): JSX.Element => {
   const [location] = useLocation();
@@ -79,11 +77,31 @@ export const Dashboard = (): JSX.Element => {
       case "/dashboard/client-usage":
         return <ClientUsageContent />;
       case "/dashboard/api-setup":
-        return <APISetup />;
+        return (
+          <div className="max-w-7xl mx-auto space-y-6">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">API Setup</h1>
+              <p className="text-gray-600 mt-1">Get started with our API integration</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+              <p className="text-gray-600">API Setup content coming soon...</p>
+            </div>
+          </div>
+        );
       case "/dashboard/api-reference":
-        return <APIReference />;
+        return (
+          <div className="max-w-7xl mx-auto space-y-6">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">API Reference</h1>
+              <p className="text-gray-600 mt-1">Complete API documentation and examples</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+              <p className="text-gray-600">API Reference content coming soon...</p>
+            </div>
+          </div>
+        );
       case "/dashboard/live-tools":
-        return <LiveTools />;
+        return <LiveToolsContent />;
       default:
         return <DashboardContent />;
     }
