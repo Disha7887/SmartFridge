@@ -1,0 +1,51 @@
+import { Switch, Route } from "wouter";
+import { queryClient } from "./lib/queryClient";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Layout } from "@/components/layout/Layout";
+import NotFound from "@/pages/not-found";
+
+import { Body } from "@/pages/Body";
+import { Pricing } from "@/pages/Pricing";
+import { Dashboard } from "@/pages/Dashboard";
+import { Contact } from "@/pages/Contact";
+import { About } from "@/pages/About";
+import { ClientUsage } from "@/pages/ClientUsage";
+import { APISetup } from "@/pages/APISetup";
+import { APIReference } from "@/pages/APIReference";
+import { LiveTools } from "@/pages/LiveTools";
+
+function Router() {
+  return (
+    <Layout>
+      <Switch>
+        {/* Add pages below */}
+        <Route path="/" component={Body} />
+        <Route path="/pricing" component={Pricing} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/dashboard/client-usage" component={Dashboard} />
+        <Route path="/dashboard/api-setup" component={Dashboard} />
+        <Route path="/dashboard/api-reference" component={Dashboard} />
+        <Route path="/dashboard/live-tools" component={Dashboard} />
+        <Route path="/about" component={About} />
+        <Route path="/contact" component={Contact} />
+        {/* Fallback to 404 */}
+        <Route component={NotFound} />
+      </Switch>
+    </Layout>
+  );
+}
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Router />
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
+
+export default App;
