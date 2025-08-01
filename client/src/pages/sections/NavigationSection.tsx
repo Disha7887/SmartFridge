@@ -12,6 +12,7 @@ export const NavigationSection = (): JSX.Element => {
   // Navigation menu items data
   const navItems = [
     { name: "Home", width: "w-[42.98px]", href: "/" },
+    { name: "Dashboard", width: "w-[68px]", href: "/dashboard" },
     { name: "Tools", width: "w-[38.66px]", href: "#" },
     { name: "Pricing", width: "w-[50.38px]", href: "/pricing" },
     { name: "About", width: "w-[42.98px]", href: "#" },
