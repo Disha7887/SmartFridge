@@ -186,9 +186,10 @@ export const Dashboard = (): JSX.Element => {
     },
     {
       name: "Live Tools",
-      description: "PDF conversion tools", 
+      description: "PDF conversion tools",
       icon: Wrench,
       active: false,
+      href: "/live-tools",
     },
   ];
 
