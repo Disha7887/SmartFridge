@@ -69,6 +69,7 @@ export const Body = (): JSX.Element => {
       <NavigationSection />
       <HeroSection />
       <FeaturesSection />
+      <PricingSection />
       <TestimonialsSection />
       <FooterSection />
 
