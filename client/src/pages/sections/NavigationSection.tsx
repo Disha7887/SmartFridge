@@ -34,9 +34,17 @@ export const NavigationSection = (): JSX.Element => {
             <NavigationMenuList className="flex space-x-8">
               {navItems.map((item, index) => (
                 <NavigationMenuItem key={index} className={item.width}>
-                  <NavigationMenuLink className="[font-family:'Roboto',Helvetica] font-medium text-[#d0d5da] text-base leading-6 whitespace-nowrap cursor-pointer">
-                    {item.name}
-                  </NavigationMenuLink>
+                  {item.href === "#" ? (
+                    <NavigationMenuLink className="[font-family:'Roboto',Helvetica] font-medium text-[#d0d5da] text-base leading-6 whitespace-nowrap cursor-pointer hover:text-white transition-colors">
+                      {item.name}
+                    </NavigationMenuLink>
+                  ) : (
+                    <Link href={item.href}>
+                      <NavigationMenuLink className="[font-family:'Roboto',Helvetica] font-medium text-[#d0d5da] text-base leading-6 whitespace-nowrap cursor-pointer hover:text-white transition-colors">
+                        {item.name}
+                      </NavigationMenuLink>
+                    </Link>
+                  )}
                 </NavigationMenuItem>
               ))}
             </NavigationMenuList>
