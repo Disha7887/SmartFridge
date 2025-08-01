@@ -13,6 +13,7 @@ import { Contact } from "@/pages/Contact";
 import { About } from "@/pages/About";
 import { ClientUsage } from "@/pages/ClientUsage";
 import { APISetup } from "@/pages/APISetup";
+import { APIReference } from "@/pages/APIReference";
 
 function Router() {
   return (
