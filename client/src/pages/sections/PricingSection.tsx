@@ -110,9 +110,9 @@ export const PricingSection = (): JSX.Element => {
 
   return (
     <div className="w-full bg-gray-50 min-h-screen">
-      {/* Header */}
+      {/* Page Header */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50">
