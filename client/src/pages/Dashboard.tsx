@@ -158,10 +158,11 @@ export const Dashboard = (): JSX.Element => {
       href: "/client-usage",
     },
     {
-      name: "API Setup", 
+      name: "API Setup",
       description: "Integration guides",
       icon: Settings,
       active: false,
+      href: "/api-setup",
     },
     {
       name: "API Reference",
